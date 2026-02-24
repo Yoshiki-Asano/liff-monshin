@@ -117,10 +117,20 @@
           return;
         }
 
-        statusEl.textContent = "ユーザー情報を取得中...";
-        var profile = await liff.getProfile();
-        var userId = profile.userId;
-        var displayName = profile.displayName;
+        var userId, displayName;
+        var cached = localStorage.getItem("liff_uid");
+
+        if (cached) {
+          var c = JSON.parse(cached);
+          userId = c.u;
+          displayName = c.n;
+        } else {
+          var profile = await liff.getProfile();
+          userId = profile.userId;
+          displayName = profile.displayName;
+          localStorage.setItem("liff_uid", JSON.stringify({ u: userId, n: displayName }));
+        }
+
         var token = generateToken();
 
         statusEl.textContent = "問診フォームを開いています...";
