@@ -137,9 +137,13 @@
         } catch (e) {
         }
 
-        statusEl.textContent = "問診フォームを開いています...";
+         statusEl.textContent = "問診フォームを開いています...";
         setTimeout(function() {
-          window.location.href = FORM_PREFILL_URL + encodeURIComponent(token);
+          liff.openWindow({
+            url: FORM_PREFILL_URL + encodeURIComponent(token),
+            external: true
+          });
+          liff.closeWindow();
         }, 1500);
 
       } catch (err) {
