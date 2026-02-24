@@ -123,28 +123,22 @@
         var displayName = profile.displayName;
         var token = generateToken();
 
-        statusEl.textContent = "情報を登録中...";
-        try {
-          await fetch(GAS_URL, {
-            method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: "type=line_register"
-              + "&token=" + encodeURIComponent(token)
-              + "&userId=" + encodeURIComponent(userId)
-              + "&displayName=" + encodeURIComponent(displayName),
-            mode: "no-cors"
-          });
-        } catch (e) {
-        }
+        statusEl.textContent = "問診フォームを開いています...";
+        fetch(GAS_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: "type=line_register"
+            + "&token=" + encodeURIComponent(token)
+            + "&userId=" + encodeURIComponent(userId)
+            + "&displayName=" + encodeURIComponent(displayName),
+          mode: "no-cors"
+        }).catch(function(){});
 
-         statusEl.textContent = "問診フォームを開いています...";
-        setTimeout(function() {
-          liff.openWindow({
-            url: FORM_PREFILL_URL + encodeURIComponent(token),
-            external: true
-          });
-          liff.closeWindow();
-        }, 1500);
+        liff.openWindow({
+          url: FORM_PREFILL_URL + encodeURIComponent(token),
+          external: true
+        });
+        liff.closeWindow();
 
       } catch (err) {
         spinnerEl.style.display = "none";
