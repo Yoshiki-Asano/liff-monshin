@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+</head>
+<body>
+  <script>
+    var params = new URLSearchParams(window.location.search);
+    var row = params.get("row");
+    var GAS_URL = "https://script.google.com/macros/s/AKfycbwwirFLAu3J9rGXziJq3XuxVPqoM5Iee7mIRMy9lJizYNXke9SUHnvrB57wE5kGcURZ/exec";
+
+    if (row) {
+      fetch(GAS_URL + "?type=shikaku_log&row=" + row, { mode: "no-cors" }).catch(function(){});
+    }
+
+    window.location.replace("https://kdg.onshikaku.org/online-care/index.html?req_type=2&mi_code=a5eb7d9ea64f5a586c93cbab23c4ff753d6de7e8");
+  </script>
+</body>
+</html>
