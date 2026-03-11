@@ -2,6 +2,14 @@
 <html>
 <head>
   <meta charset="UTF-8">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #000;
+      height: 100%;
+    }
+  </style>
 </head>
 <body>
   <script>
@@ -14,31 +22,12 @@
       var iframe = document.createElement("iframe");
       iframe.style.display = "none";
       iframe.src = GAS_URL + "?type=shikaku_log&row=" + row;
-      
-      var redirected = false;
-      iframe.onload = function() {
-        if (!redirected) {
-          redirected = true;
-          window.location.replace(redirectUrl);
-        }
-      };
-      iframe.onerror = function() {
-        if (!redirected) {
-          redirected = true;
-          window.location.replace(redirectUrl);
-        }
-      };
       document.body.appendChild(iframe);
-
-      setTimeout(function() {
-        if (!redirected) {
-          redirected = true;
-          window.location.replace(redirectUrl);
-        }
-      }, 3000);
-    } else {
-      window.location.replace(redirectUrl);
     }
+
+    setTimeout(function() {
+      window.location.replace(redirectUrl);
+    }, 500);
   </script>
 </body>
 </html>
