@@ -10,18 +10,34 @@
     var GAS_URL = "https://script.google.com/macros/s/AKfycbwwirFLAu3J9rGXziJq3XuxVPqoM5Iee7mIRMy9lJizYNXke9SUHnvrB57wE5kGcURZ/exec";
 
     if (row) {
-      fetch(GAS_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: "type=shikaku_log&row=" + row,
-        mode: "no-cors",
-        keepalive: true
-      }).catch(function(){});
+      var form = document.createElement("form");
+      form.method = "POST";
+      form.action = GAS_URL;
+      form.target = "hidden_frame";
+
+      var input1 = document.createElement("input");
+      input1.type = "hidden";
+      input1.name = "type";
+      input1.value = "shikaku_log";
+      form.appendChild(input1);
+
+      var input2 = document.createElement("input");
+      input2.type = "hidden";
+      input2.name = "row";
+      input2.value = row;
+      form.appendChild(input2);
+
+      var iframe = document.createElement("iframe");
+      iframe.name = "hidden_frame";
+      iframe.style.display = "none";
+      document.body.appendChild(iframe);
+      document.body.appendChild(form);
+      form.submit();
     }
 
     setTimeout(function() {
       window.location.replace("https://kdg.onshikaku.org/online-care/index.html?req_type=2&mi_code=a5eb7d9ea64f5a586c93cbab23c4ff753d6de7e8");
-    }, 1000);
+    }, 1500);
   </script>
 </body>
 </html>
