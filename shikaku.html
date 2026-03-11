@@ -8,19 +8,37 @@
     var params = new URLSearchParams(window.location.search);
     var row = params.get("row");
     var GAS_URL = "https://script.google.com/macros/s/AKfycbwwirFLAu3J9rGXziJq3XuxVPqoM5Iee7mIRMy9lJizYNXke9SUHnvrB57wE5kGcURZ/exec";
+    var redirectUrl = "https://kdg.onshikaku.org/online-care/index.html?req_type=2&mi_code=a5eb7d9ea64f5a586c93cbab23c4ff753d6de7e8";
 
     if (row) {
-      fetch(GAS_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: "type=shikaku_log&row=" + row,
-        mode: "no-cors"
-      }).catch(function(){});
-    }
+      var iframe = document.createElement("iframe");
+      iframe.style.display = "none";
+      iframe.src = GAS_URL + "?type=shikaku_log&row=" + row;
+      
+      var redirected = false;
+      iframe.onload = function() {
+        if (!redirected) {
+          redirected = true;
+          window.location.replace(redirectUrl);
+        }
+      };
+      iframe.onerror = function() {
+        if (!redirected) {
+          redirected = true;
+          window.location.replace(redirectUrl);
+        }
+      };
+      document.body.appendChild(iframe);
 
-    setTimeout(function() {
-      window.location.replace("https://kdg.onshikaku.org/online-care/index.html?req_type=2&mi_code=a5eb7d9ea64f5a586c93cbab23c4ff753d6de7e8");
-    }, 2000);
+      setTimeout(function() {
+        if (!redirected) {
+          redirected = true;
+          window.location.replace(redirectUrl);
+        }
+      }, 3000);
+    } else {
+      window.location.replace(redirectUrl);
+    }
   </script>
 </body>
 </html>
