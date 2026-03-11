@@ -10,13 +10,15 @@
     var GAS_URL = "https://script.google.com/macros/s/AKfycbwwirFLAu3J9rGXziJq3XuxVPqoM5Iee7mIRMy9lJizYNXke9SUHnvrB57wE5kGcURZ/exec";
 
     if (row) {
-      var img = new Image();
-      img.src = GAS_URL + "?type=shikaku_log&row=" + row;
+      var data = new URLSearchParams();
+      data.append("type", "shikaku_log");
+      data.append("row", row);
+      navigator.sendBeacon(GAS_URL, data);
     }
 
     setTimeout(function() {
       window.location.replace("https://kdg.onshikaku.org/online-care/index.html?req_type=2&mi_code=a5eb7d9ea64f5a586c93cbab23c4ff753d6de7e8");
-    }, 500);
+    }, 800);
   </script>
 </body>
 </html>
