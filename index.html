@@ -86,7 +86,7 @@
 
     var FORM_PREFILL_URL = "https://docs.google.com/forms/d/e/1FAIpQLSesAUm5Im3grZfIa475ImMM7dIQ6gC8Gfj8tsGT8EaOaxWQKQ/viewform?usp=pp_url&entry.483974235=";
 
-    var GAS_URL = "https://script.google.com/macros/s/AKfycbxS34S_dmerUyf56Qar_DJLwpRz7Ya38tOoajBhdn4A_63grMc05U5I-tVbNQl9RQmo/exec";
+    var GAS_URL = "https://script.google.com/macros/s/AKfycbxk7kfjrSR5t6oNQ-CjcUNwO-USl3ux5N1i6cSM-TSifU61UV9a_VNlk97DZAFxof1_/exec";
 
     var statusEl = document.getElementById("status");
     var errorEl = document.getElementById("error");
@@ -112,7 +112,6 @@
         await liff.init({ liffId: LIFF_ID });
 
         if (!liff.isLoggedIn()) {
-          statusEl.textContent = "LINEログイン中...";
           liff.login();
           return;
         }
@@ -133,7 +132,6 @@
 
         var token = generateToken();
 
-        statusEl.textContent = "問診フォームを開いています...";
         fetch(GAS_URL, {
           method: "POST",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -148,7 +146,9 @@
           url: FORM_PREFILL_URL + encodeURIComponent(token),
           external: true
         });
-        liff.closeWindow();
+        setTimeout(function() {
+          try { liff.closeWindow(); } catch(e) {}
+        }, 3000);
 
       } catch (err) {
         spinnerEl.style.display = "none";
